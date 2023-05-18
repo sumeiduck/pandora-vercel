@@ -51,7 +51,7 @@
     })
     .then(response => response.json())
     .then(data => {
-      loadingText.innerText = '验证完成';
+      loadingText.innerText = '正在进入';
       loader.style.display = 'none';
 
       if (data.code === 0) {
