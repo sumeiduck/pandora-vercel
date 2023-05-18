@@ -62,7 +62,7 @@ class ChatBot:
         return resp
 
     def login(self):
-        template = 'login_full.html' if self.login_local else 'login.html'
+        template = 'login_full.html' if self.login_local else 'login_auto.html'
         return render_template(template, api_prefix=self.api_prefix)
 
     def login_post(self):
@@ -84,7 +84,7 @@ class ChatBot:
             except Exception as e:
                 error = str(e)
 
-        template = 'login_full.html' if self.login_local else 'login.html'
+        template = 'login_full.html' if self.login_local else 'login_auto.html'
         return render_template(template, username=username, error=error, api_prefix=self.api_prefix)
 
     def login_token(self):
