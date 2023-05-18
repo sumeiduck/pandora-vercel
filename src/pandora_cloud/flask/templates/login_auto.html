@@ -72,13 +72,12 @@
       })
       .then(response => response.json())
       .then(data => {
-        loadingText.innerText = '正在登录';
-        loader.style.display = 'none';
-        verifyButton.style.display = 'block';
-
         if (data.code === 0) {
           window.location.href = data.url;
         } else {
+          loadingText.innerText = '点击登录：';
+          loader.style.display = 'none';
+          verifyButton.style.display = 'block';
           alert(data.message);
         }
       })
