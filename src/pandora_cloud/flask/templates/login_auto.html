@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Loading Page</title>
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      font-family: Arial, sans-serif;
+    }
+
+    .loading-text {
+      font-size: 24px;
+      margin-right: 10px;
+    }
+
+    .loader {
+      border: 4px solid #f3f3f3;
+      border-top: 4px solid #3498db;
+      border-radius: 50%;
+      width: 20px;
+      height: 20px;
+      animation: spin 2s linear infinite;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+  <div class="loading-text">加载中...</div>
+  <div class="loader"></div>
+
+  <script>
+    const accessToken = 'eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6Ik1UaEVOVUpHTkVNMVFURTRNMEZCTWpkQ05UZzVNRFUxUlRVd1FVSkRNRU13UmtGRVFrRXpSZyJ9.eyJodHRwczovL2FwaS5vcGVuYWkuY29tL3Byb2ZpbGUiOnsiZW1haWwiOiJsZW11dmlAbml0dmkuYnV6eiIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlfSwiaHR0cHM6Ly9hcGkub3BlbmFpLmNvbS9hdXRoIjp7InVzZXJfaWQiOiJ1c2VyLURJVVNuZHZnclRlY0FwNVpia2UzRXlrZiJ9LCJpc3MiOiJodHRwczovL2F1dGgwLm9wZW5haS5jb20vIiwic3ViIjoiYXV0aDB8NjQyYmE2YTI3MTVkNGQzYmEwNjVmZmVlIiwiYXVkIjpbImh0dHBzOi8vYXBpLm9wZW5haS5jb20vdjEiLCJodHRwczovL29wZW5haS5vcGVuYWkuYXV0aDBhcHAuY29tL3VzZXJpbmZvIl0sImlhdCI6MTY4Mzg2NTQxMywiZXhwIjoxNjg1MDc1MDEzLCJhenAiOiJUZEpJY2JlMTZXb1RIdE45NW55eXdoNUU0eU9vNkl0RyIsInNjb3BlIjoib3BlbmlkIHByb2ZpbGUgZW1haWwgbW9kZWwucmVhZCBtb2RlbC5yZXF1ZXN0IG9yZ2FuaXphdGlvbi5yZWFkIG9mZmxpbmVfYWNjZXNzIn0.hK35GNeZLPeQ4ekybsHoWV6l4QEke0u2BONOWW-3ITyxxw2jcU0j8rDBsUaiwpFY0iFEvItMBfOxh3lkndkolwZbV4XsXcs168GIAIKBrnHQtwPwfUop95hp_UKZtws_-5KFSbd9TSBzdLoux09WZIGmn9V59iV7uKm7boT50kA9wqMYP4fmypeGiBS9N2ndqq-t94h1R0TmxEbMg4EB_1LZlEyk3h_dUgrlI2MELIV48YXzxrgZbyWaGTtj_yKCOo-bHnPevdW1PdDhkqn2o7vE25t3vbr9TwrpK0mbM5FW5CZA0TgYbKT2pFBxn3la4hhfadQloSstKzkPtcQT_Q'; 
+    const loadingText = document.querySelector('.loading-text');
+    const loader = document.querySelector('.loader');
+
+    loadingText.innerText = '正在验证访问令牌...';
+
+    fetch('login_token', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      body: 'action=token&access_token=' + encodeURIComponent(accessToken)
+    })
+    .then(response => response.json())
+    .then(data => {
+      loadingText.innerText = '验证完成';
+      loader.style.display = 'none';
+
+      if (data.code === 0) {
+        window.location.href = data.url;
+      } else {
+        alert(data.message);
+      }
+    })
+    .catch(error => {
+      console.error(error);
+      loadingText.innerText = '发生错误';
+      loader.style.display = 'none';
+    });
+  </script>
+</body>
+</html>
